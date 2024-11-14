@@ -1,0 +1,6 @@
+1. Upload Document -> save to database (anish and manav)
+    1.1. primary-key: userid
+         file: file
+         
+2. Given json, display questions ranked on model-accuracy. Allow users to edit response variable. (angie and anish)
+3. Save to json format: remove model-accuracy (angie and anish)
