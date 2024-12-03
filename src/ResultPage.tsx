@@ -1,15 +1,20 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import data from './json-test-inputs/example1.json';
+import './ResultPage.css'
+import Carousel from './components/carousel';
 
 const ResultPage: React.FC = () => {
-  const location = useLocation();
-  const { documentText } = location.state;
 
   return (
-    <div>
-      <h1>Extracted Text Boxes</h1>
-      <pre>{documentText}</pre>
-    </div>
+      <div style={{width: "100vw", height: "100vh", position: "absolute", justifyContent: "center", top: 0, textAlign: "center"}}>
+        <h1>
+          Extracted Text on File: {data.filename}
+        </h1>
+        <div className='card-grid'>
+          <Carousel questions={data.questions} />
+        </div>
+        
+      </div>
   );
 };
 

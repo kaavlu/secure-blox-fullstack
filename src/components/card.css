@@ -1,0 +1,39 @@
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #1a1a1a;
+}
+.card:hover {
+  background-color: #0056b3;
+  cursor: pointer;
+}
+
+.question {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.choice {
+  padding: 8px 16px;
+  border: 1px solid #007BFF;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.choice:hover {
+  background-color: #0056b3;
+}
+
+.response,
+.accuracy {
+  margin-top: 8px;
+  font-size: 1.5rem;
+  color: #fff;
+}
