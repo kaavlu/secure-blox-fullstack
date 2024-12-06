@@ -1,7 +1,11 @@
-import { UploadCompanyInfo } from "@/components/upload-company-info"
+"use client"
 import { ProgressSteps } from "@/components/progress-steps"
+import { UploadCompanyInfo } from "@/components/upload-company-info"
+
 
 export default function Page() {
+
+
   return (
 
     <div className="min-h-screen w-full ">

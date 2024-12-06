@@ -3,13 +3,13 @@ import { useState } from "react"
 import { FileUpload } from "@/components/file-upload"
 
 export function UploadQuestions() {
-  const [jsonData, setJsonData] = useState(null)
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<boolean>(false)
 
   const handleFileUpload = async (file: File) => {
     const formData = new FormData()
     formData.append("file", file)
-
+  
     try {
       const response = await fetch("http://localhost:5000/upload", {
         method: "POST",
@@ -18,8 +18,9 @@ export function UploadQuestions() {
       if (!response.ok) {
         throw new Error("Failed to process the file.")
       }
-      const data = await response.json()
-      setJsonData(data)
+  
+      setSuccess(true)
+      setError(null)
     } catch (err) {
       console.error(err)
       if (err instanceof Error) {
@@ -27,8 +28,9 @@ export function UploadQuestions() {
       } else {
         setError("An unknown error occurred.")
       }
+      setSuccess(false)
     }
-  }
+  }  
 
   return (
     <div className="mt-12">
@@ -43,13 +45,16 @@ export function UploadQuestions() {
         onChange={(file) => handleFileUpload(file)}
       />
       {error && <p className="text-red-500 mt-4">Error: {error}</p>}
-      {jsonData && (
-        <a
-          href="/results"
-          className="text-blue-500 underline mt-4 block"
-        >
-          View Results
-        </a>
+      {success && (
+        <p className="text-green-500 mt-4">
+          File processed successfully.{" "}
+          <a
+            href="/results"
+            className="text-blue-500 underline"
+          >
+            View Results
+          </a>
+        </p>
       )}
     </div>
   )

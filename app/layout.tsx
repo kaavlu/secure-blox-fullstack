@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-import { AppSidebar } from '@/components/app-sidebar';
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-
 import Image from "next/image";
 
 const geistSans = localFont({
@@ -33,10 +30,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-900`}
       >
-        <SidebarProvider>
-          {/* <AppSidebar /> */}
-          <main className="ml-64 p-6">{children}</main> {/* Updated main layout */}
-        </SidebarProvider>
+          <div className="flex items-center p-4 shadow">
+          <Image src="/secureblox.png" alt="Logo" width={50} height={50} />
+          <h1 className="ml-4 text-xl font-bold text-white">Chat, is this real?</h1>
+        </div>
+        <main className="p-4">{children}</main>
       </body>
     </html>
   );
