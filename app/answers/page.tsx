@@ -1,10 +1,48 @@
 import { Button } from "@/components/ui/button"
-import { AppSidebar } from "@/components/app-sidebar"
 import { ProgressSteps } from "@/components/progress-steps"
 import { AnswerCard } from "@/components/answer-card"
-import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar"
+import { useEffect, useState } from "react"
+import { Question } from "../results/page"
+
+interface ResultsData {
+  filename: string
+  questions: Question[]
+}
 
 export default function AnswersPage() {
+
+  const [data, setData] = useState<ResultsData | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/results")
+        if (!response.ok) {
+          throw new Error("Failed to fetch results.")
+        }
+        const json = await response.json()
+        setData(json)
+      } catch (err) {
+        console.error(err)
+        setError(err instanceof Error ? err.message : "Unknown error")
+      }
+    }
+
+    fetchResults()
+  }, [])
+
+  if (error) {
+    return <p className="text-red-500">Error: {error}</p>
+  }
+
+  if (!data) {
+    return <p className="text-white">Loading results...</p>
+  }
+
+
+
+
     return (
         <div className="min-h-screen w-full ">
             <div className="flex">
@@ -21,24 +59,15 @@ export default function AnswersPage() {
                             Based on the data of the company provided, here are the answers.
                         </p>
                         <div className="space-y-6">
-                            <AnswerCard
-                                questionNumber={1}
-                                question="What is the deadline for employees to report conflicts of interest?"
-                                score="10/10"
-                                answer="Within 30 days."
-                            />
-                            <AnswerCard
-                                questionNumber={2}
-                                question="What is the process for reporting misconduct?"
-                                score="8/10"
-                                answer="Contact your immediate supervisor or the compliance hotline."
-                            />
-                            <AnswerCard
-                                questionNumber={3}
-                                question="How often is security training required?"
-                                score="9/10"
-                                answer="Annually, with quarterly refresher courses."
-                            />
+
+                            {data.questions.map((question, index) => (
+                              <AnswerCard
+                                key={index}
+                                questionNumber={index + 1}
+                                question={question.question}
+                                score={question.confidence_level}
+                                answer={question.answer} />
+                            ))}
                         </div>
                     </div>
                 </div>

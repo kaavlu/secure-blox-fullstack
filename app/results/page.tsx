@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
 
-interface Question {
+export interface Question {
   question_id: string
   question: string
   answer_choices: string[]
@@ -10,7 +10,7 @@ interface Question {
   confidence_level: number
 }
 
-interface ResultsData {
+export interface ResultsData {
   filename: string
   questions: Question[]
 }

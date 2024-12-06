@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 interface AnswerCardProps {
   questionNumber: number
   question: string
-  score: string
+  score: number
   answer: string
 }
 
