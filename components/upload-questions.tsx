@@ -1,10 +1,13 @@
 "use client"
 import { useState } from "react"
 import { FileUpload } from "@/components/file-upload"
+import { PulseLoader } from "react-spinners"
 
 export function UploadQuestions() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<boolean>(false)
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleFileUpload = async (file: File) => {
     const formData = new FormData()
@@ -21,6 +24,7 @@ export function UploadQuestions() {
   
       setSuccess(true)
       setError(null)
+      setLoading(true)
     } catch (err) {
       console.error(err)
       if (err instanceof Error) {
@@ -29,11 +33,13 @@ export function UploadQuestions() {
         setError("An unknown error occurred.")
       }
       setSuccess(false)
+      setLoading(false)
     }
   }  
 
   return (
     <div className="mt-12">
+      {loading ? (<>
       <h1 className="text-3xl font-bold text-white mb-4">
         Upload your questions
       </h1>
@@ -56,6 +62,10 @@ export function UploadQuestions() {
           </a>
         </p>
       )}
+      </>) : 
+      (<div className="flex flex-col items-center p-4">
+        <PulseLoader color="white" />
+      </div>)}
     </div>
   )
 }
