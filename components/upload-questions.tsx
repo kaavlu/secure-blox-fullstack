@@ -39,7 +39,7 @@ export function UploadQuestions() {
 
   return (
     <div className="mt-12">
-      {loading ? (<>
+      {!loading ? (<>
       <h1 className="text-3xl font-bold text-white mb-4">
         Upload your questions
       </h1>
