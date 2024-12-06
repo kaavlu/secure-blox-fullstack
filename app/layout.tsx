@@ -32,7 +32,7 @@ export default function RootLayout({
       >
           <div className="flex items-center p-4 shadow">
           <Image src="/secureblox.png" alt="Logo" width={50} height={50} />
-          <h1 className="ml-4 text-xl font-bold text-white">Chat, is this real?</h1>
+          <h1 className="ml-4 text-xl font-bold text-white">Secureblox</h1>
         </div>
         <main className="p-4">{children}</main>
       </body>

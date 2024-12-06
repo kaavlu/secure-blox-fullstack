@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { ProgressSteps } from "@/components/progress-steps"
 import { AnswerCard } from "@/components/answer-card"
@@ -22,7 +23,8 @@ export default function AnswersPage() {
           throw new Error("Failed to fetch results.")
         }
         const json = await response.json()
-        setData(json)
+        json.questions.sort((a: Question, b: Question) => a.confidence_level - b.confidence_level);
+        setData(json);
       } catch (err) {
         console.error(err)
         setError(err instanceof Error ? err.message : "Unknown error")
@@ -40,7 +42,17 @@ export default function AnswersPage() {
     return <p className="text-white">Loading results...</p>
   }
 
-
+  const handleUpdate = (updatedQuestion: Question) => {
+    setData((prevData) => {
+      if (!prevData) return null;
+      return {
+        ...prevData,
+        questions: prevData.questions.map((q) =>
+          q.question_id === updatedQuestion.question_id ? updatedQuestion : q
+        ),
+      };
+    });
+  };
 
 
     return (
@@ -63,10 +75,8 @@ export default function AnswersPage() {
                             {data.questions.map((question, index) => (
                               <AnswerCard
                                 key={index}
-                                questionNumber={index + 1}
-                                question={question.question}
-                                score={question.confidence_level}
-                                answer={question.answer} />
+                                question={question}
+                                onSave={handleUpdate} />
                             ))}
                         </div>
                     </div>

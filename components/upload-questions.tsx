@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { FileUpload } from "@/components/file-upload"
 import { PulseLoader } from "react-spinners"
+import { useRouter } from "next/navigation"
 
 export function UploadQuestions() {
   const [error, setError] = useState<string | null>(null)
@@ -9,10 +10,12 @@ export function UploadQuestions() {
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  const router = useRouter();
+
   const handleFileUpload = async (file: File) => {
     const formData = new FormData()
     formData.append("file", file)
-  
+    setLoading(true)
     try {
       const response = await fetch("http://localhost:5000/upload", {
         method: "POST",
@@ -24,7 +27,9 @@ export function UploadQuestions() {
   
       setSuccess(true)
       setError(null)
-      setLoading(true)
+
+      router.push("/answers");
+
     } catch (err) {
       console.error(err)
       if (err instanceof Error) {
@@ -35,6 +40,7 @@ export function UploadQuestions() {
       setSuccess(false)
       setLoading(false)
     }
+    setLoading(false);
   }  
 
   return (
